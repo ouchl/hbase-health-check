@@ -90,6 +90,8 @@ def get_regions(bean):
         if len(keys) != 8:
             continue
         table_name = f'{keys[1]}:{keys[3]}'
+        if table_name in ['hbase:meta', 'hbase:namespace']:
+            continue
         region_name = keys[5]
         region = regions.get(region_name, Region(name=region_name, table_name=table_name))
         if keys[-1] == 'storeFileSize':
@@ -105,6 +107,8 @@ def get_tables(bean):
         if len(keys) != 6:
             continue
         table_name = f'{keys[1]}:{keys[3]}'
+        if table_name in ['hbase:meta', 'hbase:namespace']:
+            continue
         table = tables.get(table_name, Table(name=table_name))
         if keys[-1] == 'totalRequestCount':
             table.total_requests = value

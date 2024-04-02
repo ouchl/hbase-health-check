@@ -2,7 +2,7 @@ from pathlib import Path
 
 output_dir = 'output'
 gz_file_path = Path(output_dir) / Path('clusters.json.gz')
-txt_file_path = Path(output_dir) / Path('clusters.txt')
+txt_file_path = Path(output_dir) / Path('clusters.json')
 report_dir = Path('report')
 LARGE_REGION_SIZE = 10
 COLUMN_FAMILY_THRESHOLD = 3

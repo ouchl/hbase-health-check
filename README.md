@@ -2,26 +2,27 @@
 
 ## Description
 
-This tool checks the health status of EMR HBase clusters based on region server jmx metrics.
+A simple tool which checks the health status of EMR HBase clusters based on region server jmx metrics.
 
 ## Features
 
 - Support multiple EMR clusters
-- Write results to an Excel file
 - Analyze hot regions and tables
+- Write results to an Excel file
 
 ## Getting Started
 
 ### Installation
+python >= 3.6
 
 ```
-pip install .
+pip3 install .
 ```
 
 ## Usage
 Collect EMR HBase clusters information. If cluster id is not set all EMR HBase clusters will be collected.
 ```
-hbhc collect-info --cluster-id j-xxxxx
+hbhc collect-info --cluster-id j-xxxxx,j-yyyyy
 ```
 Generate report. 
 ```

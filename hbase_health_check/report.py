@@ -100,14 +100,13 @@ def report_health_check():
         current_row += 2
         # skewed table
         all_tables = {}
-        for region_server in cluster.region_servers:
-            idx = 0
+        for idx, region_server in enumerate(cluster.region_servers):
             for table in region_server.tables:
                 data = all_tables.get(table.name, [0]*len(cluster.region_servers))
                 data[idx] = table.total_requests
                 all_tables[table.name] = data
-            idx += 0
-        for table_name, dat in all_tables.items():
+        # print(all_tables)
+        for table_name, data in all_tables.items():
             min_req = min(data)
             max_req = max(data)
             mean_req = statistics.mean(data)
