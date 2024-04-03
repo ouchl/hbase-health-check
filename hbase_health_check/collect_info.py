@@ -132,7 +132,8 @@ def get_region_servers(cluster: HBaseCluster):
     for page in response_iterator:
         for instance in page['Instances']:
             if instance['PrivateDnsName'] not in cluster.live_region_servers:
-                print(f'Instance {instance['Ec2InstanceId']} is not a live region server')
+                instance_id = instance['Ec2InstanceId']
+                print(f'Instance {instance_id} is not a live region server')
                 continue
             dns_name = instance['PublicDnsName'] or instance['PrivateDnsName']
             jmx = get_jmx(dns_name, 16030)
@@ -151,6 +152,7 @@ def get_region_servers(cluster: HBaseCluster):
                     table_bean = bean
                 elif bean['name'] == 'Hadoop:service=HBase,name=JvmMetrics':
                     jvm_bean = bean
+            gc_time = jvm_bean['GcTimeMillis'] / 1000
             region_server = RegionServer(
                 instance_id=instance['Ec2InstanceId'],
                 instance_dns_name=instance['PublicDnsName'] or instance['PrivateDnsName'],
@@ -163,7 +165,7 @@ def get_region_servers(cluster: HBaseCluster):
                 l2_hit_ratio=server_bean['l2CacheHitRatio'],
                 split_num=server_bean['splitRequestCount'],
                 gc_num=jvm_bean['GcCount'],
-                gc_time=f'{(jvm_bean['GcTimeMillis'] / 1000):2f}s'
+                gc_time=f'{gc_time:2f}s'
             )
             region_servers.append(region_server)
     return region_servers
