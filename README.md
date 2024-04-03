@@ -10,6 +10,17 @@ A simple tool which checks the health status of EMR HBase clusters based on regi
 - Analyze hot regions and tables
 - Write results to an Excel file
 
+### Check Items
+- Region counts in all region servers
+- If any region file size larger than 10GB
+- Region server request statistics to identify hot region servers
+- Table request statistics to identity hot row keys
+- HBase configuration check
+- Region server store file count
+- Cache hit ratio
+- Region split times
+- GC count and time
+
 ## Getting Started
 
 ### Installation
@@ -28,3 +39,4 @@ Generate report.
 ```
 hbhc report
 ```
+You can find the generated report in the report directory.
