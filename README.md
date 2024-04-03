@@ -33,7 +33,7 @@ pip3 install .
 ## Usage
 Collect EMR HBase clusters information. If cluster id is not set all EMR HBase clusters will be collected.
 ```
-hbhc collect-info --cluster-id j-xxxxx,j-yyyyy
+hbhc collect-info --clusters j-xxxxx,j-yyyyy
 ```
 Generate report. 
 ```
