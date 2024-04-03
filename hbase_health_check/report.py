@@ -11,6 +11,7 @@ import orjson
 
 
 def bytes_to_human_readable(num_bytes):
+    num_bytes = int(num_bytes)
     # Define the suffixes for each size scale
     suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
@@ -134,7 +135,10 @@ def report_health_check():
                 for k, v in cluster_config['Properties'].items():
                     if k in CONFIGURATIONS:
                         if k.endswith('size'):
-                            v = bytes_to_human_readable(v)
+                            try:
+                                v = bytes_to_human_readable(v)
+                            except Exception as e:
+                                pass
                         config_map[k] = v
         for k, v in config_map.items():
             sheet.insert_rows(current_row)
@@ -172,5 +176,6 @@ def report_health_check():
             sheet.cell(row=current_row, column=3, value=str(region_server.gc_num))
             sheet.cell(row=current_row, column=4, value=region_server.gc_time)
             current_row += 1
-
+    if not report_dir.exists():
+        report_dir.mkdir(parents=True, exist_ok=True)
     workbook.save(report_dir / f'report-{datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.xlsx')

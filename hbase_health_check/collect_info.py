@@ -178,6 +178,8 @@ def collect(clusters: str):
     clusters = [cluster for cluster in clusters if len(cluster.region_servers) > 0]
 
     output_data = orjson.dumps(clusters)
+    if not configuration.output_dir.exists():
+        configuration.output_dir.mkdir(parents=True, exist_ok=True)
     # write to file
     with open(configuration.txt_file_path, 'w') as f:
         f.write(output_data.decode('utf8'))
